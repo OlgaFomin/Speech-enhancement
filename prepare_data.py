@@ -38,7 +38,8 @@ min_duration, frame_length, hop_length_frame, hop_length_frame_noise, nb_samples
                                      sample_rate, frame_length, hop_length_frame, min_duration)
 
     # Blend some clean voices with random selected noises (and a random level of noise)
-    prod_voice, prod_noise, prod_noisy_voice = blend_noise_randomly(
+    # N2N additions - prod_extra_noisy_voice , prod_extra_noise , prod_total_noise
+    prod_voice, prod_noise, prod_noisy_voice , prod_extra_noisy_voice , prod_extra_noise , prod_total_noise = blend_noise_randomly(
             voice, noise, nb_samples, frame_length)
 
     # To save the long audio generated to disk to QC:
@@ -48,6 +49,14 @@ min_duration, frame_length, hop_length_frame, hop_length_frame_noise, nb_samples
     librosa.output.write_wav(path_save_sound + 'voice_long.wav', voice_long[0, :], sample_rate)
     noise_long = prod_noise.reshape(1, nb_samples * frame_length)
     librosa.output.write_wav(path_save_sound + 'noise_long.wav', noise_long[0, :], sample_rate)
+    # N2N additions - 
+    extra_noisy_voice_long = prod_extra_noisy_voice.reshape(1, nb_samples * frame_length)
+    librosa.output.write_wav(path_save_sound + 'extra_noisy_voice_long.wav', extra_noisy_voice_long[0, :], sample_rate)
+    extra_noise_long = prod_extra_noise.reshape(1, nb_samples * frame_length)
+    librosa.output.write_wav(path_save_sound + 'extra_noise_long.wav', extra_noise_long[0, :], sample_rate)
+    total_noise_long = prod_total_noise.reshape(1, nb_samples * frame_length)
+    librosa.output.write_wav(path_save_sound + 'total_noise_long.wav', total_noise_long[0, :], sample_rate)
+
 
     # Squared spectrogram dimensions
     dim_square_spec = int(n_fft / 2) + 1
@@ -59,6 +68,14 @@ min_duration, frame_length, hop_length_frame, hop_length_frame_noise, nb_samples
             prod_noise, dim_square_spec, n_fft, hop_length_fft)
     m_amp_db_noisy_voice,  m_pha_noisy_voice = numpy_audio_to_matrix_spectrogram(
             prod_noisy_voice, dim_square_spec, n_fft, hop_length_fft)
+    # N2N additions - 
+    m_amp_db_extra_noise,  m_pha_extra_noise = numpy_audio_to_matrix_spectrogram(
+            prod_extra_noise, dim_square_spec, n_fft, hop_length_fft)
+    m_amp_db_total_noise,  m_pha_total_noise = numpy_audio_to_matrix_spectrogram(
+            prod_total_noise, dim_square_spec, n_fft, hop_length_fft)
+    m_amp_db_extra_noisy_voice,  m_pha_extra_noisy_voice = numpy_audio_to_matrix_spectrogram(
+            prod_extra_noisy_voice, dim_square_spec, n_fft, hop_length_fft)
+
 
     # Save to disk for Training / QC
     np.save(path_save_time_serie + 'voice_timeserie', prod_voice)
@@ -73,3 +90,18 @@ min_duration, frame_length, hop_length_frame, hop_length_frame_noise, nb_samples
     np.save(path_save_spectrogram + 'voice_pha_db', m_pha_voice)
     np.save(path_save_spectrogram + 'noise_pha_db', m_pha_noise)
     np.save(path_save_spectrogram + 'noisy_voice_pha_db', m_pha_noisy_voice)
+
+    # N2N additions - 
+    np.save(path_save_time_serie + 'extra_noise_timeserie', prod_extra_noise)
+    np.save(path_save_time_serie + 'total_noise_timeserie', prod_total_noise)
+    np.save(path_save_time_serie + 'extra_noisy_voice_timeserie', prod_extra_noisy_voice)
+
+
+    np.save(path_save_spectrogram + 'extra_noise_amp_db', m_amp_db_extra_noise)
+    np.save(path_save_spectrogram + 'total_noise_amp_db', m_amp_db_total_noise)
+    np.save(path_save_spectrogram + 'extra_noisy_voice_amp_db', m_amp_db_extra_noisy_voice)
+
+    np.save(path_save_spectrogram + 'extra_noise_pha_db', m_pha_extra_noise)
+    np.save(path_save_spectrogram + 'total_noise_pha_db', m_pha_total_noise)
+    np.save(path_save_spectrogram + 'extra_noisy_voice_pha_db', m_pha_extra_noisy_voice)    
+
