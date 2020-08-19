@@ -45,6 +45,11 @@ def blend_noise_randomly(voice, noise, nb_samples, frame_length):
     prod_voice = np.zeros((nb_samples, frame_length))
     prod_noise = np.zeros((nb_samples, frame_length))
     prod_noisy_voice = np.zeros((nb_samples, frame_length))
+    ### N2N ###
+    prod_extra_noise = np.zeros((nb_samples, frame_length))
+    prod_total_noise = np.zeros((nb_samples, frame_length))
+    prod_extra_noisy_voice = np.zeros((nb_samples, frame_length))
+    ###########
 
     for i in range(nb_samples):
         id_voice = np.random.randint(0, voice.shape[0])
@@ -53,8 +58,14 @@ def blend_noise_randomly(voice, noise, nb_samples, frame_length):
         prod_voice[i, :] = voice[id_voice, :]
         prod_noise[i, :] = level_noise * noise[id_noise, :]
         prod_noisy_voice[i, :] = prod_voice[i, :] + prod_noise[i, :]
+        ### N2N ###
+        id_extra_noise = np.random.randint(0, noise.shape[0])
+        prod_extra_noise[i, :] = level_noise * noise[id_extra_noise, :]
+        prod_total_noise[i ,:] = prod_noise[i, :] + prod_extra_noise[i, :]
+        prod_extra_noisy_voice[i, :] = prod_voice[i, :] + prod_total_noise[i, :]
+        ###########
 
-    return prod_voice, prod_noise, prod_noisy_voice
+    return prod_voice, prod_noise, prod_noisy_voice , prod_extra_noisy_voice , prod_extra_noise , prod_total_noise
 
 
 def audio_to_magnitude_db_and_phase(n_fft, hop_length_fft, audio):
