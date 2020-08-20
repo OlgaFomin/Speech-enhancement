@@ -6,15 +6,15 @@ parser = argparse.ArgumentParser(description='Speech enhancement,data creation, 
 #N2N addition - training_n2n
 parser.add_argument('--mode',default='prediction', type=str, choices=['data_creation', 'training', 'prediction' , 'training_n2n' , 'prediction_n2n'])
 #folders where to find noise audios and clean voice audio to prepare training dataset (mode data_creation)
-parser.add_argument('--noise_dir', default='gdrive/My Drive/data/Train/noise', type=str)
+parser.add_argument('--noise_dir', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/noise', type=str)
 
-parser.add_argument('--voice_dir', default='gdrive/My Drive/data/Train/clean_voice', type=str)
+parser.add_argument('--voice_dir', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/clean_voice', type=str)
 #folders where to save spectrograms, time series and sounds for training / QC
-parser.add_argument('--path_save_spectrogram', default='gdrive/My Drive/data/Train/spectrogram/', type=str)
+parser.add_argument('--path_save_spectrogram', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/spectrogram/', type=str)
 
-parser.add_argument('--path_save_time_serie', default='gdrive/My Drive/data/Train/time_serie/', type=str)
+parser.add_argument('--path_save_time_serie', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/time_serie/', type=str)
 
-parser.add_argument('--path_save_sound', default='gdrive/My Drive/data/Train/sound/', type=str)
+parser.add_argument('--path_save_sound', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/sound/', type=str)
 #How much frame to create in data_creation mode
 parser.add_argument('--nb_samples', default=50, type=int)
 #Training from scratch or pre-trained weights
