@@ -53,7 +53,7 @@ def training(path_save_spectrogram, weights_path, name_model, training_from_scra
 
 
     #Save best models to disk during training
-    checkpoint = ModelCheckpoint(weights_path+'/model_best.h5', verbose=1, monitor='val_loss',save_best_only=True, mode='auto')
+    checkpoint = ModelCheckpoint(weights_path+'/weigths_HUBER_N2C.h5', verbose=1, monitor='val_loss',save_best_only=True, mode='auto')
 
     generator_nn.summary()
     #Training
