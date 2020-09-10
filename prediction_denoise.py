@@ -17,8 +17,7 @@ audio_output_prediction, sample_rate, min_duration, frame_length, hop_length_fra
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    #loaded_model.load_weights(weights_path+'/'+name_model+'.h5')
-    loaded_model.load_weights(weights_path+'/model_best.h5')
+    loaded_model.load_weights(weights_path+'/weigths_HUBER_N2C.h5')
     print("Loaded model from disk")
 
     # Extracting noise and voice from folder and convert to numpy
