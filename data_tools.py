@@ -23,6 +23,10 @@ def audio_files_to_numpy(audio_dir, list_audio_files, sample_rate, frame_length,
     list_sound_array = []
 
     for file in list_audio_files:
+        print('audio_files_to_numpy ', str(i*100/len(list_audio_files)), '%')
+        print(file)
+        print("--- %s seconds ---" % (time.time() - start_time))
+
         # open the audio file
         y, sr = librosa.load(os.path.join(audio_dir, file), sr=sample_rate)
         total_duration = librosa.get_duration(y=y, sr=sr)
@@ -52,6 +56,9 @@ def blend_noise_randomly(voice, noise, nb_samples, frame_length):
     ###########
 
     for i in range(nb_samples):
+        print('blend_noise_randomly ', str(i*100/nb_samples), '%')
+        print("--- %s seconds ---" % (time.time() - start_time))
+
         id_voice = np.random.randint(0, voice.shape[0])
         id_noise = np.random.randint(0, noise.shape[0])
         level_noise = np.random.uniform(0.2, 0.8)
