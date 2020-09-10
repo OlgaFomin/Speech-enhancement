@@ -4,17 +4,17 @@ parser = argparse.ArgumentParser(description='Speech enhancement,data creation, 
 
 #mode to run the program (options: data creation, training or prediction)
 #N2N addition - training_n2n
-parser.add_argument('--mode',default='prediction', type=str, choices=['data_creation', 'training', 'prediction' , 'training_n2n' , 'prediction_n2n'])
+parser.add_argument('--mode',default='prediction', type=str, choices=['data_creation', 'training', 'prediction'])
 #folders where to find noise audios and clean voice audio to prepare training dataset (mode data_creation)
-parser.add_argument('--noise_dir', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/noise', type=str)
+parser.add_argument('--noise_dir', default='./data/Train/noise', type=str)
 
-parser.add_argument('--voice_dir', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/clean_voice', type=str)
+parser.add_argument('--voice_dir', default='./data/Train/clean_voice', type=str)
 #folders where to save spectrograms, time series and sounds for training / QC
-parser.add_argument('--path_save_spectrogram', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/spectrogram/', type=str)
+parser.add_argument('--path_save_spectrogram', default='./data/Train/spectrogram/', type=str)
 
-parser.add_argument('--path_save_time_serie', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/time_serie/', type=str)
+parser.add_argument('--path_save_time_serie', default='./data/Train/time_serie/', type=str)
 
-parser.add_argument('--path_save_sound', default='gdrive/My Drive/Statistical Methods Final Project/data/Train/sound/', type=str)
+parser.add_argument('--path_save_sound', default='./data/Train/sound/', type=str)
 #How much frame to create in data_creation mode
 parser.add_argument('--nb_samples', default=50, type=int)
 #Training from scratch or pre-trained weights
@@ -28,15 +28,13 @@ parser.add_argument('--batch_size', default=20, type=int)
 #Name of saved model to read
 parser.add_argument('--name_model', default='model_unet', type=str)
 #directory where read noisy sound to denoise (prediction mode)
-parser.add_argument('--audio_dir_prediction', default='./Speech-enhancement/demo_data/test', type=str)
+parser.add_argument('--audio_dir_prediction', default='./data/Test/sound', type=str)
 #directory to save the denoise sound (prediction mode)
-parser.add_argument('--dir_save_prediction', default='./Speech-enhancement/demo_data/save_predictions/', type=str)
+parser.add_argument('--dir_save_prediction', default='./data/save_predictions/', type=str)
 #Noisy sound file to denoise (prediction mode)
-parser.add_argument('--audio_input_prediction', default=['noisy_voice_long_t2.wav'], type=list)
+parser.add_argument('--audio_input_prediction', default=['noisy_voice_long.wav'], type=list)
 #File name of sound output of denoise prediction
-parser.add_argument('--audio_output_prediction', default='denoise_t2.wav', type=str)
-#File name of sound output of N2N denoise prediction
-parser.add_argument('--audio_output_n2n_prediction', default='denoise_n2n_t2.wav', type=str)
+parser.add_argument('--audio_output_prediction', default='denoised_HUBER_N2C.wav', type=str)
 # Sample rate chosen to read audio
 parser.add_argument('--sample_rate', default=8000, type=int)
 # Minimum duration of audio files to consider
