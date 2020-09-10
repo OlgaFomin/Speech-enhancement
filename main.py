@@ -1,8 +1,8 @@
 from args import parser
 import os
 from prepare_data import create_data
-from train_model import training, training_n2n
-from prediction_denoise import prediction , prediction_n2n
+from train_model import training
+from prediction_denoise import prediction 
 
 if __name__ == '__main__':
 
@@ -14,9 +14,7 @@ if __name__ == '__main__':
     data_mode = False
     training_mode = False
     prediction_mode = False
-    # N2N addition - 
-    training_n2n_mode = False
-    prediction_n2n_mode = False
+
 
     # Update with the mode the user is asking
     if mode == 'prediction':
@@ -25,11 +23,6 @@ if __name__ == '__main__':
         training_mode = True
     elif mode == 'data_creation':
         data_mode = True
-    # N2N addition - 
-    elif mode == 'training_n2n':
-        training_n2n_mode = True
-    elif mode == 'prediction_n2n':
-        prediction_n2n_mode = True
 
 
 
@@ -113,51 +106,3 @@ if __name__ == '__main__':
 
         prediction(weights_path, name_model, audio_dir_prediction, dir_save_prediction, audio_input_prediction,
         audio_output_prediction, sample_rate, min_duration, frame_length, hop_length_frame, n_fft, hop_length_fft)
-
-    # N2N addition - 
-    elif training_n2n_mode:
-        #Example: python main.py --mode="training_n2n"
-        #Path were to read spectrograms of noisy voice and clean voice
-        path_save_spectrogram = args.path_save_spectrogram
-        #path to find pre-trained weights / save models
-        weights_path = args.weights_folder
-        #pre trained model
-        name_model = args.name_model
-        #Training from scratch vs training from pre-trained weights
-        training_from_scratch = args.training_from_scratch
-        #epochs for training
-        epochs = args.epochs
-        #batch size for training
-        batch_size = args.batch_size
-
-        training_n2n(path_save_spectrogram, weights_path, name_model, training_from_scratch, epochs, batch_size)
-    
-    elif prediction_n2n_mode:
-        #Example: python main.py --mode="prediction"
-        #path to find pre-trained weights / save models
-        weights_path = args.weights_folder
-        #pre trained model
-        name_model = args.name_model
-        #directory where read noisy sound to denoise
-        audio_dir_prediction = args.audio_dir_prediction
-        #directory to save the denoise sound
-        dir_save_prediction = args.dir_save_prediction
-        #Name noisy sound file to denoise
-        audio_input_prediction = args.audio_input_prediction
-        #Name of denoised sound file to save
-        audio_output_n2n_prediction = args.audio_output_n2n_prediction
-        # Sample rate to read audio
-        sample_rate = args.sample_rate
-        # Minimum duration of audio files to consider
-        min_duration = args.min_duration
-        #Frame length for training data
-        frame_length = args.frame_length
-        # hop length for sound files
-        hop_length_frame = args.hop_length_frame
-        #nb of points for fft(for spectrogram computation)
-        n_fft = args.n_fft
-        #hop length for fft
-        hop_length_fft = args.hop_length_fft
-
-        prediction_n2n(weights_path, name_model, audio_dir_prediction, dir_save_prediction, audio_input_prediction,
-        audio_output_n2n_prediction, sample_rate, min_duration, frame_length, hop_length_frame, n_fft, hop_length_fft)
